@@ -13,7 +13,8 @@ class PatientListViewController: UITableViewController {
     
     var itemArray = ["Paziente Bot", "Paziente Noob", "Paziente Scrub"]
     
-
+    //this is where we store our default settings
+    let defaults = UserDefaults.standard
     
     
     
@@ -22,6 +23,11 @@ class PatientListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        //uso if let per essere sicuro che questo array esista veramente in memoria, questa riga serve a popolare l'array a runtime con l'array salvata nel file .plist su memoria di massa
+        if let items = defaults.array(forKey: "PatientListArray") as? [String] {
+            itemArray = items
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -65,7 +71,11 @@ class PatientListViewController: UITableViewController {
         //modified the UiAlertAction by pressing enter on Action and making a closure this way
         let action = UIAlertAction(title: "Aggiungi Paziente", style: .default) { (action) in
             //what will happens once the user clicks the Aggiungi nuovo paziente on our UIAlerts
+            
+            //since I'm in a closure i have to add self everywhere
             self.itemArray.append(textField1.text!) //questa parte va espansa per impedire l'inserimento di stringhe vuote
+            
+            self.defaults.set(self.itemArray, forKey: "PatientListArray")
             
             self.tableView.reloadData() //this line repopulates the table data, otherwise it wouldn't be shown
         
