@@ -14,9 +14,10 @@ class PatientListViewController: UITableViewController {
     var itemArray = [Patient]()
     
     //this is where we store our default settings
-    let defaults = UserDefaults.standard
+   // let defaults = UserDefaults.standard //we wont be using this anymore
     
-    
+    //we get access to the Document directory of our app, we use .first because it's an array
+    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
     
     
 
@@ -24,25 +25,38 @@ class PatientListViewController: UITableViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        let newPatient1 = Patient()
-        newPatient1.name = "Manda Noob"
-        itemArray.append(newPatient1)
+
         
-        let newPatient2 = Patient()
-        newPatient2.name = "Botty Bot"
-        itemArray.append(newPatient2)
+        print(dataFilePath)
         
-        let newPatient3 = Patient()
-        newPatient3.name = "Ana McBot"
-        itemArray.append(newPatient3)
+        loadItems()
+
+        
+        
+        //old harcoded stuff
+//        let newPatient1 = Patient()
+//        newPatient1.name = "Manda Noob"
+//        itemArray.append(newPatient1)
+//
+//        let newPatient2 = Patient()
+//        newPatient2.name = "Botty Bot"
+//        itemArray.append(newPatient2)
+//
+//        let newPatient3 = Patient()
+//        newPatient3.name = "Ana McBot"
+//        itemArray.append(newPatient3)
         
         
         
         
         //uso if let per essere sicuro che questo array esista veramente in memoria, questa riga serve a popolare l'array a runtime con l'array salvata nel file .plist su memoria di massa
-        if let items = defaults.array(forKey: "PatientListArray") as? [Patient] {
-            itemArray = items
-        }
+//        if let items = defaults.array(forKey: "PatientListArray") as? [Patient] {
+//            itemArray = items
+//        }
+        
+        
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -88,8 +102,10 @@ class PatientListViewController: UITableViewController {
         //if i select the bool value is set to the opposite of the current one
         itemArray[indexPath.row].selected = !itemArray[indexPath.row].selected
         
+        saveItems() //we need to call it because we changed the checkmark property
+        
         //necessary to update the view with the checkboxes, they wouldn't show otherwise
-        tableView.reloadData()
+        // tableView.reloadData() //it now exists inside saveItems
         
         print(indexPath.row)
         
@@ -117,9 +133,10 @@ class PatientListViewController: UITableViewController {
             
             self.itemArray.append(newItem) //questa parte va espansa per impedire l'inserimento di stringhe vuote
             
-            self.defaults.set(self.itemArray, forKey: "PatientListArray")
+            //old userdefaults cheap storage method
+//            self.defaults.set(self.itemArray, forKey: "PatientListArray")
             
-            self.tableView.reloadData() //this line repopulates the table data, otherwise it wouldn't be shown
+            self.saveItems()
         
         }
         
@@ -138,7 +155,42 @@ class PatientListViewController: UITableViewController {
     }
     
     
+    //MARK - Model Manipulation Methods
+    
+    func saveItems() {
+        
+        let encoder = PropertyListEncoder()
+        
+        do{
+            let data = try encoder.encode(itemArray)
+            try data.write(to: dataFilePath!)
+        } catch {
+            print("Error encoding iteam array, \(error)")
+            
+        }
+        
+        self.tableView.reloadData() //this line repopulates the table data, otherwise it wouldn't be shown
+        
+    }
+    
+    func loadItems() {
+        if let data = try? Data(contentsOf: dataFilePath!) {
+            let decoder = PropertyListDecoder()
+            do {
+                itemArray = try decoder.decode([Patient].self, from: data)
+            } catch {
+                print("Error decoding iteam array, \(error)")
+            }
+        }
+        
+    }
+    
 
 
+            
+            
+            
+            
+            
 }
 

@@ -8,7 +8,8 @@
 
 import Foundation
 
-class Patient {
+//the Encodable part only works if all the data types of my class are simple data tipes and not other classes
+class Patient: Encodable, Decodable {
     var name: String = ""
     var selected: Bool = false
 }
