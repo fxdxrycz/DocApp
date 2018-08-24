@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class PatientListViewController: UITableViewController {
     
@@ -17,7 +18,9 @@ class PatientListViewController: UITableViewController {
    // let defaults = UserDefaults.standard //we wont be using this anymore
     
     //we get access to the Document directory of our app, we use .first because it's an array
-    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
+    // let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
+    
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     
 
@@ -25,13 +28,13 @@ class PatientListViewController: UITableViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-
         
-        print(dataFilePath)
+        
+
         
         loadItems()
 
-        
+        // print(dataFilePath)
         
         //old harcoded stuff
 //        let newPatient1 = Patient()
@@ -64,7 +67,7 @@ class PatientListViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    //MARK - Tableview Datasource Methods
+    //MARK: - Tableview Datasource Methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemArray.count
@@ -95,7 +98,7 @@ class PatientListViewController: UITableViewController {
         return cell
     }
     
-    //MARK - Tableview Delegate Methods
+    //MARK: - Tableview Delegate Methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -114,7 +117,8 @@ class PatientListViewController: UITableViewController {
     
     }
     
-    //MARK - Add New Items
+    //MARK: - Add New Items
+    
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         
@@ -128,8 +132,11 @@ class PatientListViewController: UITableViewController {
             
             //since I'm in a closure i have to add self everywhere
             
-            let newItem = Patient()
+            
+            
+            let newItem = Patient(context: self.context)
             newItem.name = textField1.text!
+            newItem.selected = false
             
             self.itemArray.append(newItem) //questa parte va espansa per impedire l'inserimento di stringhe vuote
             
@@ -159,13 +166,11 @@ class PatientListViewController: UITableViewController {
     
     func saveItems() {
         
-        let encoder = PropertyListEncoder()
         
         do{
-            let data = try encoder.encode(itemArray)
-            try data.write(to: dataFilePath!)
+           try context.save()
         } catch {
-            print("Error encoding iteam array, \(error)")
+            print("Error saving context, \(error)")
             
         }
         
@@ -173,24 +178,56 @@ class PatientListViewController: UITableViewController {
         
     }
     
-    func loadItems() {
-        if let data = try? Data(contentsOf: dataFilePath!) {
-            let decoder = PropertyListDecoder()
-            do {
-                itemArray = try decoder.decode([Patient].self, from: data)
-            } catch {
-                print("Error decoding iteam array, \(error)")
-            }
-        }
+    //by placing the =Patient.fetchRequest() inside the passed parameters I'm saying that calling this method without parameters the request will get this default value
+    //with request are the external and internal parameters
+    func loadItems(with request: NSFetchRequest<Patient> = Patient.fetchRequest()) {
         
+      //  let request: NSFetchRequest<Patient> = Patient.fetchRequest() //I'm already passing this
+        
+        do {
+        itemArray = try context.fetch(request)
+        } catch {
+            print("Error fetching data from context \(error)")
+        }
+
+        tableView.reloadData()
     }
-    
-
-
-            
-            
             
             
             
 }
 
+
+//MARK: - Search Bar Methods
+extension PatientListViewController: UISearchBarDelegate{
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        let request : NSFetchRequest<Patient> = Patient.fetchRequest()
+        //print(searchBar.text)
+        
+        request.predicate = NSPredicate(format: "name CONTAINS[CD] %@", searchBar.text!)
+        
+
+        
+        //this way I sort the data I get back in alphabetical order
+        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true, selector:#selector(NSString.caseInsensitiveCompare(_:)))
+        
+        
+        request.sortDescriptors = [sortDescriptor]
+        
+        loadItems(with: request)
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+            loadItems()
+            
+            //I'm saying to the dispatcher to run this method on the main queue, by doing this the cursors stop flashing on the search bar after i deleted its content
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+            
+        }
+    }
+    
+    
+}

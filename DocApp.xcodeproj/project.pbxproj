@@ -7,16 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		091E967C212EC5A60069AB3A /* Patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091E967B212EC5A60069AB3A /* Patient.swift */; };
 		0943749E212C752300CF1C63 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0943749D212C752300CF1C63 /* AppDelegate.swift */; };
 		094374A0212C752300CF1C63 /* PatientListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0943749F212C752300CF1C63 /* PatientListViewController.swift */; };
 		094374A3212C752300CF1C63 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 094374A1212C752300CF1C63 /* Main.storyboard */; };
 		094374A5212C752500CF1C63 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 094374A4212C752500CF1C63 /* Assets.xcassets */; };
 		094374A8212C752500CF1C63 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 094374A6212C752500CF1C63 /* LaunchScreen.storyboard */; };
+		09A65195212F27350034E409 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 09A65193212F27350034E409 /* DataModel.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		091E967B212EC5A60069AB3A /* Patient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Patient.swift; sourceTree = "<group>"; };
 		0943749A212C752300CF1C63 /* DocApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DocApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0943749D212C752300CF1C63 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0943749F212C752300CF1C63 /* PatientListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientListViewController.swift; sourceTree = "<group>"; };
@@ -24,6 +23,7 @@
 		094374A4212C752500CF1C63 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		094374A7212C752500CF1C63 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		094374A9212C752500CF1C63 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		09A65194212F27350034E409 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,7 +40,7 @@
 		091E967D212EC5AC0069AB3A /* Data Model */ = {
 			isa = PBXGroup;
 			children = (
-				091E967B212EC5A60069AB3A /* Patient.swift */,
+				09A65193212F27350034E409 /* DataModel.xcdatamodeld */,
 			);
 			path = "Data Model";
 			sourceTree = "<group>";
@@ -171,8 +171,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				094374A0212C752300CF1C63 /* PatientListViewController.swift in Sources */,
+				09A65195212F27350034E409 /* DataModel.xcdatamodeld in Sources */,
 				0943749E212C752300CF1C63 /* AppDelegate.swift in Sources */,
-				091E967C212EC5A60069AB3A /* Patient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,6 +370,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		09A65193212F27350034E409 /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				09A65194212F27350034E409 /* DataModel.xcdatamodel */,
+			);
+			currentVersion = 09A65194212F27350034E409 /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 09437492212C752300CF1C63 /* Project object */;
 }
