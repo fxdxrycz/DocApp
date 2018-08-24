@@ -78,8 +78,14 @@ class PatientListViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PatientItemCell" , for: indexPath)
         
         cell.textLabel?.text = itemArray[indexPath.row].name
+        cell.detailTextLabel?.text = "Gianni Casadoppia corre tutto da solo sotto la luna e le stelle e prova a scrivere un app iOS"
+        cell.textLabel?.textColor = UIColor.purple
+        //let labelFontSize = (cell.detailTextLabel!.font.pointSize)
+        //cell.textLabel?.font = cell.textLabel?.font.withSize(labelFontSize - 3)
         
         
+        
+        cell.accessoryType = .disclosureIndicator
         
         //chemark code, this can be done with the following ternary operator
         
@@ -92,7 +98,7 @@ class PatientListViewController: UITableViewController {
         //ternary operator
         // value = condition ? valueIfTrue : valueIfFalse
         
-        cell.accessoryType = itemArray[indexPath.row].selected  ? .checkmark : .none 
+        //cell.accessoryType = itemArray[indexPath.row].selected  ? .checkmark : .none
         
         
         return cell
@@ -222,9 +228,9 @@ extension PatientListViewController: UISearchBarDelegate{
             loadItems()
             
             //I'm saying to the dispatcher to run this method on the main queue, by doing this the cursors stop flashing on the search bar after i deleted its content
-            DispatchQueue.main.async {
-                searchBar.resignFirstResponder()
-            }
+//            DispatchQueue.main.async {
+//                searchBar.resignFirstResponder()
+//            }
             
         }
     }
