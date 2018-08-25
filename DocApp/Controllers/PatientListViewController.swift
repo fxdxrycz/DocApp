@@ -7,56 +7,23 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 class PatientListViewController: UITableViewController {
     
+    let realm = try! Realm()
     
-    var itemArray = [Patient]()
-    
-    //this is where we store our default settings
-   // let defaults = UserDefaults.standard //we wont be using this anymore
-    
-    //we get access to the Document directory of our app, we use .first because it's an array
-    // let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
-    
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
-    
+    var patientArray: Results<Patient>?
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
         
-        
-
-        
         loadItems()
 
         // print(dataFilePath)
-        
-        //old harcoded stuff
-//        let newPatient1 = Patient()
-//        newPatient1.name = "Manda Noob"
-//        itemArray.append(newPatient1)
-//
-//        let newPatient2 = Patient()
-//        newPatient2.name = "Botty Bot"
-//        itemArray.append(newPatient2)
-//
-//        let newPatient3 = Patient()
-//        newPatient3.name = "Ana McBot"
-//        itemArray.append(newPatient3)
-        
-        
-        
-        
-        //uso if let per essere sicuro che questo array esista veramente in memoria, questa riga serve a popolare l'array a runtime con l'array salvata nel file .plist su memoria di massa
-//        if let items = defaults.array(forKey: "PatientListArray") as? [Patient] {
-//            itemArray = items
-//        }
-        
         
         
         
@@ -70,14 +37,15 @@ class PatientListViewController: UITableViewController {
     //MARK: - Tableview Datasource Methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return itemArray.count
+        // the "??" is the Nil Coalescing Operator, it means the patientArray could be nil, so I'm getting the count only if it's not nil, otherwise I'm getting 1
+        return patientArray?.count ?? 1
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "PatientItemCell" , for: indexPath)
         
-        cell.textLabel?.text = itemArray[indexPath.row].name
+        cell.textLabel?.text = patientArray?[indexPath.row].name ?? "Nessun paziente è stato aggiunto"
         cell.detailTextLabel?.text = "Gianni Casadoppia corre tutto da solo sotto la luna e le stelle e prova a scrivere un app iOS"
         cell.textLabel?.textColor = UIColor.purple
         //let labelFontSize = (cell.detailTextLabel!.font.pointSize)
@@ -87,9 +55,11 @@ class PatientListViewController: UITableViewController {
         
         cell.accessoryType = .disclosureIndicator
         
+        
+        
         //chemark code, this can be done with the following ternary operator
         
-//        if itemArray[indexPath.row].selected == true{
+//        if patientArray[indexPath.row].selected == true{
 //            cell.accessoryType = .checkmark
 //        } else {
 //            cell.accessoryType = .none
@@ -98,7 +68,7 @@ class PatientListViewController: UITableViewController {
         //ternary operator
         // value = condition ? valueIfTrue : valueIfFalse
         
-        //cell.accessoryType = itemArray[indexPath.row].selected  ? .checkmark : .none
+        cell.accessoryType = patientArray![indexPath.row].selected  ? .checkmark : .none
         
         
         return cell
@@ -108,10 +78,26 @@ class PatientListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        //if i select the bool value is set to the opposite of the current one
-        itemArray[indexPath.row].selected = !itemArray[indexPath.row].selected
         
-        saveItems() //we need to call it because we changed the checkmark property
+        
+        
+        if let item = patientArray?[indexPath.row] {
+            do{
+                try realm.write {
+                    //realm.delete(item)
+                    item.selected = !item.selected
+                }
+            } catch {
+                print("Error deleting, \(error)")
+            }
+        }
+        
+         tableView.reloadData()
+        
+        //if i select the bool value is set to the opposite of the current one
+        //patientArray![indexPath.row].selected = !patientArray[indexPath.row].selected
+        
+        //self.save(patient: Patient) //we need to call it because we changed the checkmark property
         
         //necessary to update the view with the checkboxes, they wouldn't show otherwise
         // tableView.reloadData() //it now exists inside saveItems
@@ -140,16 +126,13 @@ class PatientListViewController: UITableViewController {
             
             
             
-            let newItem = Patient(context: self.context)
+            let newItem = Patient()
             newItem.name = textField1.text!
             newItem.selected = false
+            newItem.dateCreated = Date()
+        
             
-            self.itemArray.append(newItem) //questa parte va espansa per impedire l'inserimento di stringhe vuote
-            
-            //old userdefaults cheap storage method
-//            self.defaults.set(self.itemArray, forKey: "PatientListArray")
-            
-            self.saveItems()
+            self.save(patient: newItem)
         
         }
         
@@ -170,11 +153,14 @@ class PatientListViewController: UITableViewController {
     
     //MARK - Model Manipulation Methods
     
-    func saveItems() {
+    func save(patient: Patient) {
         
         
         do{
-           try context.save()
+            try realm.write(){
+                realm.add(patient)
+            }
+            
         } catch {
             print("Error saving context, \(error)")
             
@@ -186,19 +172,14 @@ class PatientListViewController: UITableViewController {
     
     //by placing the =Patient.fetchRequest() inside the passed parameters I'm saying that calling this method without parameters the request will get this default value
     //with request are the external and internal parameters
-    func loadItems(with request: NSFetchRequest<Patient> = Patient.fetchRequest()) {
+    func loadItems() {
         
-      //  let request: NSFetchRequest<Patient> = Patient.fetchRequest() //I'm already passing this
-        
-        do {
-        itemArray = try context.fetch(request)
-        } catch {
-            print("Error fetching data from context \(error)")
-        }
+        patientArray = realm.objects(Patient.self)
+    
 
         tableView.reloadData()
     }
-            
+    
             
             
 }
@@ -207,20 +188,23 @@ class PatientListViewController: UITableViewController {
 //MARK: - Search Bar Methods
 extension PatientListViewController: UISearchBarDelegate{
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        let request : NSFetchRequest<Patient> = Patient.fetchRequest()
-        //print(searchBar.text)
         
-        request.predicate = NSPredicate(format: "name CONTAINS[CD] %@", searchBar.text!)
+        patientArray = patientArray?.filter("name CONTAINS[CD] %@", searchBar.text!).sorted(byKeyPath: "name", ascending: true)
+        
+        tableView.reloadData()
+        
+        
+        
+        
+        
+        
+        
+        
         
 
-        
-        //this way I sort the data I get back in alphabetical order
-        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true, selector:#selector(NSString.caseInsensitiveCompare(_:)))
-        
-        
-        request.sortDescriptors = [sortDescriptor]
-        
-        loadItems(with: request)
+//        //this way I sort the data I get back in alphabetical order
+//        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true, selector:#selector(NSString.caseInsensitiveCompare(_:)))
+
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

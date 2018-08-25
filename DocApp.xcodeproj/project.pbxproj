@@ -12,7 +12,8 @@
 		094374A3212C752300CF1C63 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 094374A1212C752300CF1C63 /* Main.storyboard */; };
 		094374A5212C752500CF1C63 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 094374A4212C752500CF1C63 /* Assets.xcassets */; };
 		094374A8212C752500CF1C63 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 094374A6212C752500CF1C63 /* LaunchScreen.storyboard */; };
-		09A65195212F27350034E409 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 09A65193212F27350034E409 /* DataModel.xcdatamodeld */; };
+		09E2C1F021308FF500B35F1B /* Patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E2C1EF21308FF500B35F1B /* Patient.swift */; };
+		11BD094CF219EFB5513594FE /* Pods_DocApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D809C7196AD5321B6A18AFF /* Pods_DocApp.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,7 +24,10 @@
 		094374A4212C752500CF1C63 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		094374A7212C752500CF1C63 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		094374A9212C752500CF1C63 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		09A65194212F27350034E409 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		09E2C1EF21308FF500B35F1B /* Patient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Patient.swift; sourceTree = "<group>"; };
+		6D809C7196AD5321B6A18AFF /* Pods_DocApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DocApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		81D918E057D080D584DC95B3 /* Pods-DocApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DocApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-DocApp/Pods-DocApp.release.xcconfig"; sourceTree = "<group>"; };
+		D4E719D8DD8D1A764914D7F2 /* Pods-DocApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DocApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DocApp/Pods-DocApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11BD094CF219EFB5513594FE /* Pods_DocApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,7 +45,7 @@
 		091E967D212EC5AC0069AB3A /* Data Model */ = {
 			isa = PBXGroup;
 			children = (
-				09A65193212F27350034E409 /* DataModel.xcdatamodeld */,
+				09E2C1EF21308FF500B35F1B /* Patient.swift */,
 			);
 			path = "Data Model";
 			sourceTree = "<group>";
@@ -75,6 +80,8 @@
 			children = (
 				0943749C212C752300CF1C63 /* DocApp */,
 				0943749B212C752300CF1C63 /* Products */,
+				C0E0617D0AB7ABE2678581D8 /* Pods */,
+				49517654104CD2653FB61283 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -99,6 +106,23 @@
 			path = DocApp;
 			sourceTree = "<group>";
 		};
+		49517654104CD2653FB61283 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6D809C7196AD5321B6A18AFF /* Pods_DocApp.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C0E0617D0AB7ABE2678581D8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D4E719D8DD8D1A764914D7F2 /* Pods-DocApp.debug.xcconfig */,
+				81D918E057D080D584DC95B3 /* Pods-DocApp.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -106,9 +130,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 094374AC212C752500CF1C63 /* Build configuration list for PBXNativeTarget "DocApp" */;
 			buildPhases = (
+				EBC69C24FB4ED70A5C15DF4F /* [CP] Check Pods Manifest.lock */,
 				09437496212C752300CF1C63 /* Sources */,
 				09437497212C752300CF1C63 /* Frameworks */,
 				09437498212C752300CF1C63 /* Resources */,
+				66BB1A1C63A2FDA206E16BB0 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -165,13 +191,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		66BB1A1C63A2FDA206E16BB0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-DocApp/Pods-DocApp-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DocApp/Pods-DocApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EBC69C24FB4ED70A5C15DF4F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-DocApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		09437496212C752300CF1C63 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				094374A0212C752300CF1C63 /* PatientListViewController.swift in Sources */,
-				09A65195212F27350034E409 /* DataModel.xcdatamodeld in Sources */,
+				09E2C1F021308FF500B35F1B /* Patient.swift in Sources */,
 				0943749E212C752300CF1C63 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -314,6 +381,7 @@
 		};
 		094374AD212C752500CF1C63 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D4E719D8DD8D1A764914D7F2 /* Pods-DocApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -332,6 +400,7 @@
 		};
 		094374AE212C752500CF1C63 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 81D918E057D080D584DC95B3 /* Pods-DocApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -370,19 +439,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		09A65193212F27350034E409 /* DataModel.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				09A65194212F27350034E409 /* DataModel.xcdatamodel */,
-			);
-			currentVersion = 09A65194212F27350034E409 /* DataModel.xcdatamodel */;
-			path = DataModel.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 09437492212C752300CF1C63 /* Project object */;
 }
