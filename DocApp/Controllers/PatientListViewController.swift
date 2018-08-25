@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import SwipeCellKit
 
 class PatientListViewController: UITableViewController {
     
@@ -43,7 +44,10 @@ class PatientListViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PatientItemCell" , for: indexPath)
+        //I'm casting the cell as SwipeTabelViewCell and setting the delegate to self, necessary to use SwipeCellKit
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PatientItemCell" , for: indexPath) as! SwipeTableViewCell
+        
+        cell.delegate = self
         
         cell.textLabel?.text = patientArray?[indexPath.row].name ?? "Nessun paziente è stato aggiunto"
         cell.detailTextLabel?.text = "Gianni Casadoppia corre tutto da solo sotto la luna e le stelle e prova a scrivere un app iOS"
@@ -162,7 +166,7 @@ class PatientListViewController: UITableViewController {
             }
             
         } catch {
-            print("Error saving context, \(error)")
+            print("Error saving into db, \(error)")
             
         }
         
@@ -220,4 +224,38 @@ extension PatientListViewController: UISearchBarDelegate{
     }
     
     
+}
+
+//MARK: - SwipeCell Methods
+extension PatientListViewController: SwipeTableViewCellDelegate{
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        guard orientation == .right else { return nil }
+        
+        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
+            // handle action by updating model with deletion
+            if let itemForDeletion = self.patientArray?[indexPath.row] {
+                do{
+                    try self.realm.write(){
+                        self.realm.delete(itemForDeletion)
+                    }
+                    
+                } catch {
+                    print("Error deleting from db, \(error)")
+                }
+                tableView.reloadData()
+            }
+
+            
+        }
+      
+        
+        // customize the action appearance
+        deleteAction.image = UIImage(named: "delete-icon")
+        
+        return [deleteAction]
+        
+     
+    }
+
 }

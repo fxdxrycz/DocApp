@@ -8,4 +8,6 @@ target 'DocApp' do
   # Pods for DocApp
 
 pod 'RealmSwift'
+pod 'SwipeCellKit'
+
 end
