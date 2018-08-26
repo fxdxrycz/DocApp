@@ -50,8 +50,7 @@ class PatientListViewController: UITableViewController {
         cell.delegate = self
         
         cell.textLabel?.text = patientArray?[indexPath.row].name ?? "Nessun paziente è stato aggiunto"
-        cell.detailTextLabel?.text = "Gianni Casadoppia corre tutto da solo sotto la luna e le stelle e prova a scrivere un app iOS"
-        cell.textLabel?.textColor = UIColor.purple
+        cell.textLabel?.textColor = UIColor.black
         //let labelFontSize = (cell.detailTextLabel!.font.pointSize)
         //cell.textLabel?.font = cell.textLabel?.font.withSize(labelFontSize - 3)
         
@@ -82,21 +81,24 @@ class PatientListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        performSegue(withIdentifier: "goToPatients", sender: self)
         
         
         
-        if let item = patientArray?[indexPath.row] {
-            do{
-                try realm.write {
-                    //realm.delete(item)
-                    item.selected = !item.selected
-                }
-            } catch {
-                print("Error deleting, \(error)")
-            }
-        }
         
-         tableView.reloadData()
+//        if let item = patientArray?[indexPath.row] {
+//            do{
+//                try realm.write {
+//                    //realm.delete(item)
+//                    item.selected = !item.selected
+//                }
+//            } catch {
+//                print("Error deleting, \(error)")
+//            }
+//        }
+//         tableView.reloadData()
+        
+        
         
         //if i select the bool value is set to the opposite of the current one
         //patientArray![indexPath.row].selected = !patientArray[indexPath.row].selected
@@ -113,14 +115,31 @@ class PatientListViewController: UITableViewController {
     
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        let destinationVC = segue.destination as! PatientViewController
+        if let indexPath = tableView.indexPathForSelectedRow {
+            destinationVC.selectedPatient = patientArray?[indexPath.row]
+        }
+    }
+    
+    
+    
+    
+    
     //MARK: - Add New Items
     
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         
         var textField1 = UITextField()
+        var textField2 = UITextField()
+        var textField3 = UITextField()
+        var textField4 = UITextField()
+        var textField5 = UITextField()
         
-        let alert = UIAlertController(title: "Aggiungi Nuovo Paziente", message: "", preferredStyle: .alert)
+        
+        let alert = UIAlertController(title: "Inserisci i dati", message: "", preferredStyle: .alert)
         
         //modified the UiAlertAction by pressing enter on Action and making a closure this way
         let action = UIAlertAction(title: "Aggiungi Paziente", style: .default) { (action) in
@@ -128,30 +147,61 @@ class PatientListViewController: UITableViewController {
             
             //since I'm in a closure i have to add self everywhere
             
-            
-            
             let newItem = Patient()
             newItem.name = textField1.text!
+            newItem.age = textField2.text!
+            newItem.cf = textField3.text!
+            newItem.address = textField4.text!
+            newItem.notes = textField5.text!
             newItem.selected = false
             newItem.dateCreated = Date()
+            self.save(patient: newItem)
         
             
-            self.save(patient: newItem)
         
         }
         
+       
+        
         //again after selecting alert.addTextField from xcode, I press enter on the last field and I create a closure
         alert.addTextField { (alertTextField) in
-            alertTextField.placeholder = "Create new item"
+            alertTextField.placeholder = "Inserisci qui il nome"
             textField1 = alertTextField //I'm doing this because the alertTextField is only avaible to the scope of this closure
-         
-   
+            
+        }
+        
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Inserisci qui l'età"
+            textField2 = alertTextField //I'm doing this because the alertTextField is only avaible to the scope of this closure
+        }
+        
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Inserisci qui il codice fiscale"
+            textField3 = alertTextField //I'm doing this because the alertTextField is only avaible to the scope of this closure
+        }
+        
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Inserisci qui l'indirizzo"
+            textField4 = alertTextField //I'm doing this because the alertTextField is only avaible to the scope of this closure
+        }
+        
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Inserisci qui le note"
+            textField5 = alertTextField //I'm doing this because the alertTextField is only avaible to the scope of this closure
         }
         
         alert.addAction(action)
         
         //this way I actually show the alert
         present(alert, animated: true, completion: nil)
+        
+        
+        
+
+        
+        
+        
+        
     }
     
     
@@ -174,8 +224,6 @@ class PatientListViewController: UITableViewController {
         
     }
     
-    //by placing the =Patient.fetchRequest() inside the passed parameters I'm saying that calling this method without parameters the request will get this default value
-    //with request are the external and internal parameters
     func loadItems() {
         
         patientArray = realm.objects(Patient.self)

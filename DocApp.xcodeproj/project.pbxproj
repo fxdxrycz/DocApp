@@ -12,6 +12,7 @@
 		094374A3212C752300CF1C63 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 094374A1212C752300CF1C63 /* Main.storyboard */; };
 		094374A5212C752500CF1C63 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 094374A4212C752500CF1C63 /* Assets.xcassets */; };
 		094374A8212C752500CF1C63 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 094374A6212C752500CF1C63 /* LaunchScreen.storyboard */; };
+		09D3BA332131BB5D00A1FC21 /* PatientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D3BA322131BB5D00A1FC21 /* PatientViewController.swift */; };
 		09E2C1F021308FF500B35F1B /* Patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E2C1EF21308FF500B35F1B /* Patient.swift */; };
 		11BD094CF219EFB5513594FE /* Pods_DocApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D809C7196AD5321B6A18AFF /* Pods_DocApp.framework */; };
 /* End PBXBuildFile section */
@@ -24,6 +25,7 @@
 		094374A4212C752500CF1C63 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		094374A7212C752500CF1C63 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		094374A9212C752500CF1C63 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		09D3BA322131BB5D00A1FC21 /* PatientViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientViewController.swift; sourceTree = "<group>"; };
 		09E2C1EF21308FF500B35F1B /* Patient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Patient.swift; sourceTree = "<group>"; };
 		6D809C7196AD5321B6A18AFF /* Pods_DocApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DocApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		81D918E057D080D584DC95B3 /* Pods-DocApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DocApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-DocApp/Pods-DocApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -54,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				0943749F212C752300CF1C63 /* PatientListViewController.swift */,
+				09D3BA322131BB5D00A1FC21 /* PatientViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -241,6 +244,7 @@
 			files = (
 				094374A0212C752300CF1C63 /* PatientListViewController.swift in Sources */,
 				09E2C1F021308FF500B35F1B /* Patient.swift in Sources */,
+				09D3BA332131BB5D00A1FC21 /* PatientViewController.swift in Sources */,
 				0943749E212C752300CF1C63 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

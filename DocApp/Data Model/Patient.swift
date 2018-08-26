@@ -11,6 +11,10 @@ import RealmSwift
 
 class Patient: Object {
     @objc dynamic var name : String = ""
+    @objc dynamic var age : String = ""
+    @objc dynamic var cf : String = ""
+    @objc dynamic var address : String = ""
+    @objc dynamic var notes : String = ""
     @objc dynamic var selected : Bool = false
     @objc dynamic var dateCreated : Date?
 }
