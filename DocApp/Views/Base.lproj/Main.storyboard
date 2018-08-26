@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Doc's Patients-->
+        <!--Giocatori-->
         <scene sceneID="qt2-sM-P1g">
             <objects>
                 <tableViewController id="Tnu-pa-MZ3" customClass="PatientListViewController" customModule="DocApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -49,7 +49,7 @@
                             <outlet property="delegate" destination="Tnu-pa-MZ3" id="WV2-qM-lHb"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Doc's Patients" id="EEP-qi-x1X">
+                    <navigationItem key="navigationItem" title="Giocatori" id="EEP-qi-x1X">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="QHk-wE-CJA">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
@@ -63,7 +63,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xDl-3e-539" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1463" y="133"/>
+            <point key="canvasLocation" x="2196" y="193"/>
         </scene>
         <!--Patient View Controller-->
         <scene sceneID="U0c-fg-coG">
@@ -107,7 +107,45 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m3g-6h-98d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2257" y="133"/>
+            <point key="canvasLocation" x="3020" y="239"/>
+        </scene>
+        <!--Ruvinats Calcio-->
+        <scene sceneID="uUd-nC-U8E">
+            <objects>
+                <tableViewController id="uWs-R9-iH8" customClass="TeamListViewController" customModule="DocApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="azM-Pr-FAk">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TeamCell" id="Cj5-st-uhF" customClass="SwipeTableViewCell" customModule="SwipeCellKit">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Cj5-st-uhF" id="TxR-fJ-ncE">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="uWs-R9-iH8" id="euL-Cn-WFK"/>
+                            <outlet property="delegate" destination="uWs-R9-iH8" id="r72-pV-Dyo"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Ruvinats Calcio" id="edV-d2-713">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="tc0-PM-49T">
+                            <connections>
+                                <action selector="addButtonPressed:" destination="uWs-R9-iH8" id="vhC-3A-ybd"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="Tnu-pa-MZ3" kind="show" identifier="goToPatientList" id="5Ct-eY-wTg"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8ry-7A-DVJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1486" y="193"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="DiR-JI-w2C">
@@ -124,7 +162,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="Tnu-pa-MZ3" kind="relationship" relationship="rootViewController" id="YAu-XQ-zL0"/>
+                        <segue destination="uWs-R9-iH8" kind="relationship" relationship="rootViewController" id="NnO-da-1OB"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1NY-Xs-0tv" userLabel="First Responder" sceneMemberID="firstResponder"/>

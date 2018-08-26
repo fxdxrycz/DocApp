@@ -44,11 +44,13 @@ class PatientListViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        
         //I'm casting the cell as SwipeTabelViewCell and setting the delegate to self, necessary to use SwipeCellKit
         let cell = tableView.dequeueReusableCell(withIdentifier: "PatientItemCell" , for: indexPath) as! SwipeTableViewCell
         
         cell.delegate = self
         
+        tableView.rowHeight = 80
         cell.textLabel?.text = patientArray?[indexPath.row].name ?? "Nessun paziente è stato aggiunto"
         cell.textLabel?.textColor = UIColor.black
         //let labelFontSize = (cell.detailTextLabel!.font.pointSize)
@@ -263,10 +265,10 @@ extension PatientListViewController: UISearchBarDelegate{
         if searchBar.text?.count == 0 {
             loadItems()
             
-            //I'm saying to the dispatcher to run this method on the main queue, by doing this the cursors stop flashing on the search bar after i deleted its content
-//            DispatchQueue.main.async {
-//                searchBar.resignFirstResponder()
-//            }
+//            I'm saying to the dispatcher to run this method on the main queue, by doing this the cursors stop flashing on the search bar after i deleted its content
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
             
         }
     }
